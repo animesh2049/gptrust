@@ -34,7 +34,7 @@ struct ModelResponse {
 }
 
 pub async fn gptrust_getmodels() -> Result<Vec<Model>, Box<dyn std::error::Error>> {
-    let body = gptrust_http::openai_http::openai_get("models".to_string()).await?;
+    let body = gptrust_http::openai_http::openai_get("models".to_string(), "").await?;
     let model_resp: ModelResponse = serde_json::from_str(&body)?;
     Ok(model_resp.data)
 }

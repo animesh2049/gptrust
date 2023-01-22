@@ -15,7 +15,7 @@ struct EngineResponse {
 }
 
 pub async fn gptrust_getengines() -> Result<Vec<Engine>, Box<dyn std::error::Error>> {
-    let body = gptrust_http::openai_http::openai_get("engines".to_string()).await?;
+    let body = gptrust_http::openai_http::openai_get("engines".to_string(), "").await?;
     let engine_resp: EngineResponse = serde_json::from_str(&body)?;
     Ok(engine_resp.data)
 }

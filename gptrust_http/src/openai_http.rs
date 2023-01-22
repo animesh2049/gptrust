@@ -6,7 +6,7 @@ const OPENAI_BASE_URL: &str = "https://api.openai.com/v1/";
 const OPENAI_ORG: &str = "org-ioVS0wAWUCPVBK4x45pqIGCj";
 const OPENAI_ENV: &str = "OPENAI_API_KEY";
 
-pub async fn openai_get(subpath: String) -> Result<String, Box<dyn std::error::Error>> {
+pub async fn openai_get(subpath: String, body: String) -> Result<String, Box<dyn std::error::Error>> {
     let full_path = format!("{}{}", OPENAI_BASE_URL, subpath);
     let https = hyper_tls::HttpsConnector::new();
     let client = hyper::Client::builder().build::<_, hyper::Body>(https);
@@ -16,7 +16,7 @@ pub async fn openai_get(subpath: String) -> Result<String, Box<dyn std::error::E
         .uri(full_path)
         .header("Authorization", format!("Bearer {}", api_key))
         .header("OpenAI-Organization", OPENAI_ORG)
-        .body(hyper::Body::from(""))?;
+        .body(hyper::Body::from(body))?;
 
     // Pass our request builder object to our client.
     let resp = client.request(req).await?;

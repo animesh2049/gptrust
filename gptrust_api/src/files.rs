@@ -17,7 +17,7 @@ struct FileResponse {
 }
 
 pub async fn gptrust_getfiles() -> Result<Vec<File>, Box<dyn std::error::Error>> {
-    let body = gptrust_http::openai_get("files".to_string()).await?;
+    let body = gptrust_http::openai_get("files".to_string(), "").await?;
     let file_resp: FileResponse = serde_json::from_str(&body)?;
     Ok(file_resp.data)
 }
